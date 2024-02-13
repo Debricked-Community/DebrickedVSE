@@ -68,9 +68,9 @@ Depending on the provided options (credentials, mapping strategy) the toolwindow
 during this process to request user input
 
 Depending on options (triggers) the above process will also be triggered by:
-	- SolutionBuild (except when followed by debug session)
-	- SolutionBuild (always)
-	- RefrenceAdded
+- SolutionBuild (except when followed by debug session)
+- SolutionBuild (always)
+- RefrenceAdded
 	
 The options can be found in Options->General.cs or in the UI under Tools->Options->Debricked
 each option contains a description that hopefully explains what it does

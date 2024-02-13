@@ -14,7 +14,7 @@ Helper Class extensions
 - HierarchyEventsHelper (non-static) - Helper for handling VsHierarchyEvents in the MasterEventHandler
 - HttpHelper (static) - helper class used by the DebrickedAPIHelper to make http calls
 - MasterEventHandlerHelper (singleton) (WIP) - central event handler, instantiated on package launch, handles all events
-- ProcessHelper (static) - helper methods for running processes (used scanhelper to run debricked commands)
+- ProcessHelper (static) - helper methods for running processes (used by scanhelper to run debricked commands)
 - ScanHelper (non-static) - helper for running scans (prepares & runs scan, fetches results using DebrickedAPIHelper and returns results)
 - ScanResultStorageHelper (static) - helper for storing and loading scan results to/from disk
 - ScrollviewerHelper (static) - dont worry about it, dont touch it ;=)

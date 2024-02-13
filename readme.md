@@ -48,13 +48,13 @@ It subscribes to the OnAfterBackgroundSolutionLoadComplete event which on trigge
 - loads existing data for the project that was opened
 - writes policy violations to the error list
 - populates the toolwindow with results if it is loaded
-- subscribes to other event handlers based on settings (onAfterBuild, onReferenceAdded etc)
+- subscribes to other event handlers based on settings (onAfterBuild, onReferenceAdded etc)  
+
 When VS is opened with a solution already open the same logic is executed.
 
-The toolwindow can be opened through View->other windows->Debricked
-The toolwindow shows 2 tabs (Vulnerabilities/Dependencies) of data in a filterable and sortable grid format, a click on a row shows details
-It also has a "Rescan" button that triggers the following actions:
-
+The toolwindow can be opened through View->other windows->Debricked  
+The toolwindow shows 2 tabs (Vulnerabilities/Dependencies) of data in a filterable and sortable grid format, a click on a row shows details  
+It also has a "Rescan" button that triggers the following actions:  
 - check for debricked cli update (calls github api)
 - update cli if newer version is available
 - run resolve
@@ -66,7 +66,6 @@ It also has a "Rescan" button that triggers the following actions:
 
 Depending on the provided options (credentials, mapping strategy) the toolwindow will open further dialogs
 during this process to request user input
-
 Depending on options (triggers) the above process will also be triggered by:
 - SolutionBuild (except when followed by debug session)
 - SolutionBuild (always)

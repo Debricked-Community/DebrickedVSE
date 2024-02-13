@@ -101,4 +101,5 @@ If you ever need to reset your Experimental Instance and the extension doesnt sh
 
 
 ## Note:
-This extension requires Debricked CLI version 1.8.2, which at the time of publishing is not yet available. If you want to test the extension in the meantime use a developer build of the CLI main branch (https://github.com/debricked/cli).
+This extension requires Debricked CLI version 1.8.2, which at the time of publishing is not yet available. If you want to test the extension in the meantime use a developer build of the CLI main branch (https://github.com/debricked/cli).  
+To use your own cli executable copy it to the datadir (default %appdata%/debrickedVSe) and create a file called "cliversion" with the content "1.8.2" in the same directory.

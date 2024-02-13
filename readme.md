@@ -20,9 +20,9 @@ Helper Class extensions
 - ScrollviewerHelper (static) - dont worry about it, dont touch it ;=)
 - SettingsHelper (static) - helper for storing and loading some file base settings (general settings are handled through the Options>General.cs class
 ### Models:
-Constants: Constant values (enums, regex patterns, api endpoints etc)
-DebrickedApi: models that reflect the data structure returned by the debricked api
-Github: models that reflect data returned by the github api
+Constants: Constant values (enums, regex patterns, api endpoints etc)  
+DebrickedApi: models that reflect the data structure returned by the debricked api  
+Github: models that reflect data returned by the github api  
 	
 files in the root of this folder reflect the internal models used by the extension for UI bindings and storage
 

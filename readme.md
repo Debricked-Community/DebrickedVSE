@@ -62,16 +62,16 @@ It also has a "Rescan" button that triggers the following actions:
 - create temporary repo or map to existing repo depending on mapping strategy options
 - run scan
 - fetch results from the api (depending on settings and refresh timeout either a full or partial refresh is done)
-- update toolwindow ui and errorlist
+- update toolwindow ui and errorlist  
 
 Depending on the provided options (credentials, mapping strategy) the toolwindow will open further dialogs
-during this process to request user input
+during this process to request user input  
 Depending on options (triggers) the above process will also be triggered by:
 - SolutionBuild (except when followed by debug session)
 - SolutionBuild (always)
 - RefrenceAdded
 	
-The options can be found in Options->General.cs or in the UI under Tools->Options->Debricked
+The options can be found in Options->General.cs or in the UI under Tools->Options->Debricked  
 each option contains a description that hopefully explains what it does
 
 # How to Build:

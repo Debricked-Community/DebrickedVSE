@@ -75,7 +75,7 @@ The options can be found in Options->General.cs or in the UI under Tools->Option
 each option contains a description that hopefully explains what it does
 
 # How to Build:
-Install the Visual Studio extension development workload through the Visual Studio installer
+Install the Visual Studio extension development workload through the Visual Studio installer  
 Load Solution in Visual Studio 2022, right click solution in solution explorer -> build :)
 
 # WIPs:

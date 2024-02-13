@@ -18,7 +18,7 @@ Helper Class extensions
 - ScanHelper (non-static) - helper for running scans (prepares & runs scan, fetches results using DebrickedAPIHelper and returns results)
 - ScanResultStorageHelper (static) - helper for storing and loading scan results to/from disk
 - ScrollviewerHelper (static) - dont worry about it, dont touch it ;=)
-- SettingsHelper (static) - helper for storing and loading some file base settings (general settings are handled through the Options>General.cs class
+- SettingsHelper (static) - helper for storing and loading some file based settings (general settings are handled through the Options>General.cs class
 ### Models:
 Constants: Constant values (enums, regex patterns, api endpoints etc)  
 DebrickedApi: models that reflect the data structure returned by the debricked api  

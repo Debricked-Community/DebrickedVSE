@@ -1,0 +1,345 @@
+﻿<UserControl x:Class="Debricked.toolwindows.main.Controls.DG_Vulnerabilities"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:models="clr-namespace:Debricked.Models.DebrickedApi"
+             xmlns:converter="clr-namespace:Debricked.Converters"
+             xmlns:selectors="clr-namespace:Debricked.Selectors"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DataGrid x:Name="dgVulns" ItemsSource="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}" PreviewMouseLeftButtonUp="dgVulns_PreviewMouseLeftButtonUp" CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
+              Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}" 
+              HeadersVisibility="Column" AlternationCount="2" ScrollViewer.CanContentScroll="False">
+        <DataGrid.Resources>
+            <DataTemplate x:Key="StartIntervalTemplate">
+                <Path Data="M 0,0 L 0,20 Z M 0,10 L 20,10" Height="20" Stroke="{Binding Brush}" StrokeThickness="2"/>
+            </DataTemplate>
+            <DataTemplate x:Key="MidIntervalTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" CornerRadius="4" BorderBrush="{Binding Brush}" BorderThickness="2">
+                        <TextBlock Text="{Binding StartVersion}" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Path Grid.Column="1" Data="M 0,10 L 10,10" Height="20" Stroke="{Binding Brush}" StrokeThickness="2"/>
+                </Grid>
+            </DataTemplate>
+            <Style TargetType="{x:Type DataGridRow}">
+                <Setter Property="MinHeight" Value="25"/>
+                <Style.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                        <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}"/>
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                        <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingBackgroundKey}}"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabMouseOverBackgroundGradientKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <selectors:TimelineIntervalTemplateSelector x:Key="TimelineIntervalTemplateSelector"/>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingTextKey}}"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingBackgroundKey}}"/>
+            </Style>
+            <converter:MultiBindingStringConverter x:Key="multiBindingConverter"/>
+            <HierarchicalDataTemplate  DataType="{x:Type models:DebrickedDependencyTreeNode}" x:Key="hdt">
+                <TreeViewItem IsExpanded="True" ItemsSource="{Binding Children}" ItemTemplate="{DynamicResource hdt}" Margin="-16,0,0,0" Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}" Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                    <TreeViewItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+				Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                                <Label.Content>
+                                    <MultiBinding Converter="{StaticResource multiBindingConverter}">
+                                        <Binding Path="Name"/>
+                                        <Binding Path="Version"/>
+                                        <Binding Path="Fix"/>
+                                    </MultiBinding>
+                                </Label.Content>
+                            </Label>
+                            <Label Content="{Binding Path=Fix}" Foreground="Green" Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"/>
+                        </StackPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </HierarchicalDataTemplate>
+            <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="Padding" Value="2"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingTextKey}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                            <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ControlTemplate TargetType="{x:Type ToggleButton}" x:Key="toggleButtonTemplate">
+                <Grid Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}" Height="20" HorizontalAlignment="Left" Background="{TemplateBinding Background}" Margin="3,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="Transparent" Grid.ColumnSpan="2"></Rectangle>
+                    <Polygon x:Name="ArrowPoly" Points="0,0 16,0 8,8" Stroke="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" Fill="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <ContentPresenter Margin="2,0,0,0" ContentSource="Content" Grid.Column="1"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Points" TargetName="ArrowPoly" Value="0,0 6,0 3,3"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="False">
+                        <Setter Property="Points" TargetName="ArrowPoly" Value="0,0 5,3 0,6"/>
+                    </Trigger>
+
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate TargetType="{x:Type ToggleButton}" x:Key="summaryToggleButtonTemplate">
+                <Grid Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}" Height="20" HorizontalAlignment="Left" Background="{TemplateBinding Background}" Margin="3,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="Transparent" Grid.ColumnSpan="2"></Rectangle>
+                    <Polygon x:Name="SummaryArrowPoly" Points="0,0 16,0 8,8" Stroke="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" Fill="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ContentPresenter Margin="2,0,0,0" Grid.Column="2" Content="{Binding Category}">
+                    </ContentPresenter>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Points" TargetName="SummaryArrowPoly" Value="0,0 6,0 3,3"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="False">
+                        <Setter Property="Points" TargetName="SummaryArrowPoly" Value="0,0 5,3 0,6"/>
+                    </Trigger>
+
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="ExpanderTemplate" TargetType="{x:Type Expander}">
+                <DockPanel>
+                    <ToggleButton x:Name="ExpanderButton" Background="{TemplateBinding Background}" Template="{StaticResource toggleButtonTemplate}" DockPanel.Dock="Top" Content="{TemplateBinding Header}" IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" OverridesDefaultStyle="True"/>
+                    <ContentPresenter Visibility="Visible" DockPanel.Dock="Bottom" Name="ExpanderContent"/>
+                </DockPanel>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="True">
+                        <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsExpanded" Value="False">
+                        <Setter TargetName="ExpanderContent" Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="SummaryExpanderTemplate" TargetType="{x:Type Expander}">
+                <DockPanel Margin="0,0,0,0">
+                    <Grid DockPanel.Dock="Top" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton Grid.Column="0" x:Name="SummaryExpanderButton" Background="{TemplateBinding Background}" Template="{StaticResource summaryToggleButtonTemplate}" DataContext="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=DataContext}" IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" OverridesDefaultStyle="True"/>
+                        <Image Grid.Column="1" Margin="2,-5,0,0" Visibility="{Binding LinkImageVisibility}" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Source="pack://application:,,,/Debricked;component/toolwindows/main/Resources/HyperlinkForward.png" PreviewMouseLeftButtonUp="linkImage_MouseLeftButtonUp"/>
+                    </Grid>
+                    <ContentPresenter Grid.Column="0" Margin="15,0,0,0" Visibility="Visible" DockPanel.Dock="Bottom" Name="SummaryExpanderContent"/>
+
+                </DockPanel>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="True">
+                        <Setter TargetName="SummaryExpanderContent" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsExpanded" Value="False">
+                        <Setter TargetName="SummaryExpanderContent" Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <TextDecorationCollection  x:Key="hyperLinkUnderline">
+                <TextDecoration Location="Underline">
+                    <TextDecoration.Pen>
+                        <Pen Brush="LightBlue" />
+                    </TextDecoration.Pen>
+                </TextDecoration>
+            </TextDecorationCollection>
+            <converter:RowDetailsHeightConverter x:Key="rowDetailsHeightConverter"/>
+        </DataGrid.Resources>
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding CveId, Mode=OneWay}" x:Name="cveColumn" Width="*">
+                <DataGridTextColumn.Header>
+                    <Label Content="CVE ID" FontWeight="Bold"/>
+                </DataGridTextColumn.Header>
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="2,0,0,0"/>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
+            <DataGridTemplateColumn Width="50" SortDirection="Descending" SortMemberPath="Cvss">
+                <DataGridTemplateColumn.Header>
+                    <Label Content="CVSS" FontWeight="Bold"/>
+                </DataGridTemplateColumn.Header>
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Cvss, Mode=OneWay}" 
+                     Background="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingBackgroundKey}}" 
+                     BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingBackgroundKey}}" 
+                     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.GridHeadingTextKey}}" 
+                     HorizontalContentAlignment="Left" Margin="0" Padding="2,0,2,0" VerticalAlignment="Center"/>
+                            <Ellipse Fill="{Binding CvssBrush}"  Height="10" Width="10" StrokeThickness="1" Stroke="Black" Margin="5,2,5,2"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Width="50">
+                <DataGridTemplateColumn.Header>
+                    <Label Content="Fixable" FontWeight="Bold"/>
+                </DataGridTemplateColumn.Header>
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Fill="{Binding RootFixStatusBrush}"  Height="10" Width="10" StrokeThickness="1" Stroke="Black" Margin="5,2,5,2" ToolTip="Rootfix availability"/>
+                            <Ellipse Fill="{Binding DirectFixStatusBrush}"  Height="10" Width="10" StrokeThickness="1" Stroke="Black" Margin="5,2,5,2" ToolTip="Component-level fix availability"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTextColumn Binding="{Binding VulnerabilityStatusString, Mode=OneWay}" MinWidth="20" Width="80">
+                <DataGridTextColumn.Header>
+                    <Label Content="Status" FontWeight="Bold"/>
+                </DataGridTextColumn.Header>
+            </DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding DependenciesNames.Count, Mode=OneWay}" MinWidth="20" Width="20">
+                <DataGridTextColumn.Header>
+                    <Label Content="#" FontWeight="Bold"/>
+                </DataGridTextColumn.Header>
+            </DataGridTextColumn>
+        </DataGrid.Columns>
+        <DataGrid.RowDetailsTemplate>
+            <DataTemplate>
+                <ScrollViewer HorizontalContentAlignment="Stretch" MaxHeight="{Binding Path=ActualHeight, Converter={StaticResource rowDetailsHeightConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" MaxWidth="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}" CanContentScroll="True"
+                     PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                     Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}" 
+                     BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Margin="5,0,0,0">
+                            <Hyperlink NavigateUri="{Binding Link}" ToolTip="{Binding Link}" FontSize="12" TextDecorations="None" RequestNavigate="Hyperlink_RequestNavigate">
+                            <TextBlock Text="View Vulnerability on Debricked">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="LightBlue"/>
+                                        <Setter Property="TextDecorations" Value="None"/>
+                                        <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextDecorations" Value="{DynamicResource hyperLinkUnderline}"/>
+                                        </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBox Grid.Row="1" Text="{Binding Details, Mode=OneWay}" Padding="5"  x:Name="tbAffected" BorderThickness="0"
+                     Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}" 
+                     BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}"/>
+
+                        <TreeView Grid.Row="2" x:Name="icTrees" ItemsSource="{Binding Trees}" PreviewMouseWheel="icTrees_PreviewMouseWheel" Margin="-5,0,0,0"
+                              BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                              Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                            <TreeView.ItemTemplate>
+                                <DataTemplate>
+                                    <TreeViewItem Margin="-19,0,0,0"
+                                      Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                                      Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" IsEnabled="{Binding ShouldBeEnabled}">
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                                                    Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                                                    <Label.Content>
+                                                        <MultiBinding Converter="{StaticResource multiBindingConverter}">
+                                                            <Binding Path="Name"/>
+                                                            <Binding Path="Version"/>
+                                                            <Binding Path="Fix"/>
+                                                        </MultiBinding>
+                                                    </Label.Content>
+                                                </Label>
+                                                <Label Padding="0" Margin="0,5,0,0" Content="{Binding Path=Fix}" Foreground="Green" Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"/>
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                        <ItemsControl x:Name="icChildItems" ItemsSource="{Binding Path=Children}" ItemTemplate="{StaticResource ResourceKey=hdt}"/>
+                                    </TreeViewItem>
+                                </DataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                        <Expander Grid.Row="3" Header="Vulnerability Timelines" Template="{StaticResource ExpanderTemplate}" Margin="0,5,0,0"
+                              BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                              Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                            <ItemsControl ItemsSource="{Binding VulnerabilityTimelineIntervals}" Name="icTimelines" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding Key}" Template="{StaticResource ExpanderTemplate}" Margin="5,5,0,0" IsExpanded="True"
+                                          BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                                          Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                                          Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                                            <ItemsControl ItemsSource="{Binding Value}" Margin="9,2,0,0" Name="icTimeLineIntervals" ItemTemplateSelector="{StaticResource TimelineIntervalTemplateSelector}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                        <Expander Grid.Row="4" Header="References" Template="{StaticResource ExpanderTemplate}" Margin="0,5,0,0"
+                              BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                              Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                            <ItemsControl ItemsSource="{Binding RefSummaries}" Name="icReferences">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Template="{StaticResource SummaryExpanderTemplate}" Margin="5,5,0,0" MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}"
+                                          BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabBorderKey}}" 
+                                          Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabGradientKey}}"
+                                          Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}">
+                                            <Border BorderThickness="1" CornerRadius="4" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowTabTextKey}}" Padding="2">
+
+                                                <TextBlock Text="{Binding Description}"  TextWrapping="Wrap"></TextBlock>
+                                            </Border>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </Grid>
+                </ScrollViewer>
+            </DataTemplate>
+        </DataGrid.RowDetailsTemplate>
+    </DataGrid>
+</UserControl>

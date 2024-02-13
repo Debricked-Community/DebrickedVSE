@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{87E9384D-4F8D-46F9-844D-029C1F3FA47D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Debricked</RootNamespace>
+    <AssemblyName>Debricked</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <UseCodebase>true</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
+    <DeployExtension>True</DeployExtension>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Converters\JsonBooleanConverter.cs" />
+    <Compile Include="Converters\JsonNamedCollectionPropertiesToDictStringStringConverter.cs" />
+    <Compile Include="Converters\JsonIntegerConverter.cs" />
+    <Compile Include="Converters\JsonOshMetricsConverter.cs" />
+    <Compile Include="Converters\JsonValueListToStringListConverter.cs" />
+    <Compile Include="Converters\MultiBindingStringConverter.cs" />
+    <Compile Include="Converters\RowDetailsHeightConverter.cs" />
+    <Compile Include="Converters\ScoreToSweepAngleConverter.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Helpers\CLHelper.cs" />
+    <Compile Include="Helpers\ConversionHelper.cs" />
+    <Compile Include="Helpers\DebrickedAPIHelper.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
+    <Compile Include="Helpers\ErrorListHelper.cs" />
+    <Compile Include="Helpers\EventBurstHelper.cs" />
+    <Compile Include="Helpers\HierarchyEventsHelper.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\DebrickedCliHelper.cs" />
+    <Compile Include="Helpers\MasterEventHandlerHelper.cs" />
+    <Compile Include="Helpers\ProcessHelper.cs" />
+    <Compile Include="Helpers\ScanHelper.cs" />
+    <Compile Include="Helpers\ScanResultStorageHelper.cs" />
+    <Compile Include="Helpers\ScrollViewerHelper.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
+    <Compile Include="Models\Constants\ApiEndpoints.cs" />
+    <Compile Include="Models\Constants\CLProjectTypeEnum.cs" />
+    <Compile Include="Models\Constants\Guids.cs" />
+    <Compile Include="Models\Constants\LicenseRiskEnum.cs" />
+    <Compile Include="Models\Constants\MappingStrategyEnums.cs" />
+    <Compile Include="Models\Constants\PolicyStatusEnum.cs" />
+    <Compile Include="Models\Constants\RegEx.cs" />
+    <Compile Include="Models\Constants\RuleSubjectLabels.cs" />
+    <Compile Include="Models\Constants\SettingsProperties.cs" />
+    <Compile Include="Models\Constants\VulnerabilityStatusEnum.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedCommitIdentifier.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedDependencyInfoReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedDependencyTreeNode.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedDependencyTreeReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedFileReference.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedGetSelectDependencyIdReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedLicensesReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedDependency.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedLicense.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedOSHDataReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedPolicyHintsReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedPolicyHintsSummary.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedPolicyHintsTriggeredRule.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRepositoryIdentifier.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRootFixReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRuleDataCondition.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRuleGroup.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRulesDataReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedRulesReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedSelectDependencyDataReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedTokenReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedDependenciesReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedUploadFileReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedUploadResultAutomationRule.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedUploadResultAutomationRuleEvent.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedUploadResultReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnerabilitiesReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnerability.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnRefSummary.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnRefSummaryReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnTimeLineInnerReply.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnTimeLineInterval.cs" />
+    <Compile Include="Models\DebrickedApi\DebrickedVulnTimelineReply.cs" />
+    <Compile Include="Models\DebrickedApi\IDebrickedApiReply.cs" />
+    <Compile Include="Models\Dependency.cs" />
+    <Compile Include="Models\Github\GithubAsset.cs" />
+    <Compile Include="Models\Github\GitHubRelease.cs" />
+    <Compile Include="Models\License.cs" />
+    <Compile Include="Models\Rule.cs" />
+    <Compile Include="Models\ScanResult.cs" />
+    <Compile Include="Models\Vulnerability.cs" />
+    <Compile Include="Options\General.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DebrickedPackage.cs" />
+    <Compile Include="Selectors\TimelineIntervalTemplateSelector.cs" />
+    <Compile Include="Selectors\TreeViewRootItemTemplateSelector.cs" />
+    <Compile Include="Shapes\Arc.cs" />
+    <Compile Include="toolwindows\Dialogs\BaseDialogWindow.cs" />
+    <Compile Include="toolwindows\Dialogs\CredentialPromptWindow.xaml.cs">
+      <DependentUpon>CredentialPromptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolwindows\Dialogs\RepositoryIdPromptWindow.xaml.cs">
+      <DependentUpon>RepositoryIdPromptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolwindows\main\Controls\DG_Dependencies.xaml.cs">
+      <DependentUpon>DG_Dependencies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolwindows\main\Controls\DG_Vulnerabilities.xaml.cs">
+      <DependentUpon>DG_Vulnerabilities.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolwindows\main\tw_main.cs" />
+    <Compile Include="toolwindows\main\tw_mainCommand.cs" />
+    <Compile Include="toolwindows\main\Controls\tw_mainControl.xaml.cs">
+      <DependentUpon>tw_mainControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Community.VisualStudio.Toolkit.17">
+      <Version>17.0.507</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.8.37222" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.8.2365" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="toolwindows\Dialogs\CredentialPromptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolwindows\Dialogs\RepositoryIdPromptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolwindows\main\Controls\DG_Dependencies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolwindows\main\Controls\DG_Vulnerabilities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolwindows\main\Controls\tw_mainControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="DebrickedPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <Resource Include="toolwindows\main\Resources\hyperlinkforward.png" />
+    <Content Include="toolwindows\main\Resources\tw_mainCommand.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

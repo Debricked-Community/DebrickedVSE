@@ -80,22 +80,22 @@ Install the Visual Studio extension development workload through the Visual Stud
 Load Solution in Visual Studio 2022, right click solution in solution explorer -> build :)
 
 # WIPs:
-temp repo creation and rule copying -> complete implementation and test
-finish the MasterEventHandler handlers for refAdded/removed 
-support ReferenceAdded event for other languages (python/js etc)-> this should be possible by subscribing to the reference hierarchy nodes in the solution explorer, an example for python is already started in CLHelper
-error handling
+- temp repo creation and rule copying -> complete implementation and test
+- finish the MasterEventHandler handlers for refAdded/removed 
+- support ReferenceAdded event for other languages (python/js etc)-> this should be possible by subscribing to the reference hierarchy nodes in the solution explorer, an example for python is already started in CLHelper
+- error handling
 
 ## Ideas for what to do next:
-investigate option for on-commit trigger (including option to abort commit)
-investigate if its worthwile to implement an "onLockFileEdited" trigger
+- investigate option for on-commit trigger (including option to abort commit)
+- investigate if its worthwile to implement an "onLockFileEdited" trigger
 
 ## Tip:
 If you ever need to reset your Experimental Instance and the extension doesnt show up when debugging do the following:
-close all vs instances
-reset experimental instance
-open your project
-clean project
-rebuild solution
-switch to release mode and launch the debugger
-when prompted select "continue debugging"
-once the experimental instance is loaded close it and switch back to debug mode
+- close all vs instances
+- reset experimental instance
+- open your project
+- clean project
+- rebuild solution
+- switch to release mode and launch the debugger
+- when prompted select "continue debugging"
+- once the experimental instance is loaded close it and switch back to debug mode

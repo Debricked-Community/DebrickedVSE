@@ -28,7 +28,7 @@ Configure an optional proxy and enable "Ignore certificate errors" if required
 
 
 Repository mapping:
-There are two types of repository mapping the extension can use, the chosen repository type and associated mapping strategy have a major impact on data retention and hygiene.
+There are two types of repository mapping the extension can use, the chosen repository type and associated mapping strategy have a major impact on data retention and hygiene in your Debricked tenant.
 The two types of repositories are "persistent" and "temporary" repositories. 
 
 

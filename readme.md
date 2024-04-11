@@ -1,8 +1,7 @@
 # Debricked Visual Studio Extension
 
-readme in progress, check contributing.md if you want to contribute
 
-## Setup (Visual Studio 2022 required)
+# Setup (Visual Studio 2022 required)
 
 - Download the latest release in the releases section
 - run the .vsix file to install the extension
@@ -13,7 +12,7 @@ readme in progress, check contributing.md if you want to contribute
 Either ["Debricked Token"](https://docs.debricked.com/product/administration/generate-access-token) or "Debricked Username" AND "Debricked Password" are required to establish a connection to the Debricked API (Debricked Enterprise is required)
 
 <details>
-  <summary>### Other options (recommended)</summary>
+  <summary>Other options (recommended)</summary>
 
 ### Connection options (optional)
 Configure an optional proxy and enable "Ignore certificate errors" if required
@@ -36,7 +35,7 @@ The two types of repositories are "persistent" and "temporary" repositories.
 Persistent Repositories:
 
 When using a persistent repository the extension will map a Visual Studio solution or project to a Debricked repository (either existing or automatically created). The repository in question will persist and each consecutive scan will be uploaded to the mapped repository. Be aware that Debricked essentially overwrites old results with new ones. Dont apply this on repositories you are actually using to monitor your pipeline health.
-When using a persistent repository the extension will incrementally update new scan results to preserve API calls.
+When using a persistent repository the extension will incrementally pull new scan results to preserve API calls.
 
 For persistent repositories there are 3 mapping strategy options:
 - AutoDetectThenSolutionName: The extension will run ["debricked scan"](https://docs.debricked.com/tools-and-integrations/cli/debricked-cli#scan) without the -repository and -commit parameter the first time a project is scanned. If the debricked CLI fails to detect a repository the solution- or projectname will be used as the repository name.
@@ -58,3 +57,10 @@ For temporary repositories there are 2 mapping strategy options:
 - On reference added: Triggers a rescan when a reference is added (currently supported for C#, VB)
   
 </details>
+
+
+# Usage
+To display the toolwindow click on View -> Other Windows -> Debricked
+Once a solution has been loaded a scan can be manually triggered by clicking the "Rescan" button.
+
+The toolwindow is split into 2 Tabs (Vulnerabilities and Dependencies) both of which contain a sortable and filterable DataGrid showing vulnerability and dependency data. Clicking on a row shows more details about the entry.

@@ -57,11 +57,8 @@ namespace Debricked.Models.DebrickedApi
             content.repositoryIds = RepositoryIds;
             content.ruleIds = RuleIds;
             content.defaultRuleIds = DefaultRuleIds;
-            content.updatedAt = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
-            content.updatedBy = "DebrickedVSE";
-            content.updatedType = "createDefault";
-            var strin = JsonSerializer.Serialize(content);
-            return new StringContent(strin);
+            var str = JsonSerializer.Serialize(content);
+            return new StringContent(str);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Debricked.Models.DebrickedApi
         [JsonPropertyName("percentage")]
         public string Percentage { get; set; }
 
-        [JsonPropertyName("estimatedDaysLeft")]
-        public int EstimatedDaysLeft { get; set; }
+        //[JsonPropertyName("estimatedDaysLeft")]
+        //public int EstimatedDaysLeft { get; set; }
     }
 }

@@ -485,7 +485,7 @@ namespace Debricked.Helpers
             form.Add(new StringContent(repositoryName), "repositoryName");
             form.Add(new StringContent("initialcommit"), "commitName");
             byte[] jsonContent = Encoding.UTF8.GetBytes("{}");
-            form.Add(new ByteArrayContent(jsonContent, 0, jsonContent.Length), "fileData", "empty.lock.json");
+            form.Add(new ByteArrayContent(jsonContent, 0, jsonContent.Length), "fileData", "packages.lock.json");
             return await HttpHelper.MakePostRequestAsync<DebrickedUploadFileReply>(client, ApiEndpoints.UploadFileUrl, form);
         }
 
@@ -548,14 +548,14 @@ namespace Debricked.Helpers
             var rules = await HttpHelper.MakePostRequestAsync<DebrickedRulesReply>(client, string.Format(ApiEndpoints.RulesUrl, mappedRepoId), new StringContent(""));
             foreach (var rule in rules.RuleGroups)
             {
+                if(rule.DefaultRuleIds!=null && rule.DefaultRuleIds.Count > 0) { continue; }
                 //get conditions since the next endpoint requires them to be present :( doesnt even work properly, no conditions returned
                 dynamic dyn = new ExpandoObject();
-                dyn.repository_ids = rule.RepositoryIds;
-                dyn.rule_ids = rule.RuleIds;
-                dyn._locale = "string";
+                dyn.repositoryIds = rule.RepositoryIds;
+                dyn.ruleIds = rule.RuleIds;
+                dyn.locale = "en";
                 var ruleConditions = await HttpHelper.MakePostRequestAsync<DebrickedRulesDataReply>(client, ApiEndpoints.RulesDataUrl, new StringContent(JsonSerializer.Serialize(dyn)));
 
-                continue;
                 rule.RepositoryIds.Add(tempRepoId);
                 string body = JsonSerializer.Serialize(rule);
                 var body2 = rule.GetPutContent(ruleConditions.Conditions);

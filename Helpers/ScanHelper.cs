@@ -7,10 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Debricked.Helpers
@@ -118,7 +116,13 @@ namespace Debricked.Helpers
                 }
                 else
                 {
-                    await clearStatusBarAndThrowAsync(scanResult.StdErr);
+                    if(string.IsNullOrEmpty(scanResult.StdErr) && scanResult.StdOut.Contains("fail pipeline")) 
+                    {
+                        scanResult.MappedRepository = mappedRepositoryIdentifier;
+                    } else
+                    {
+                        await clearStatusBarAndThrowAsync(scanResult.StdErr);
+                    }
                 }
             } else
             {

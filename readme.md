@@ -55,7 +55,7 @@ For temporary repositories there are 2 mapping strategy options:
 ### Triggers (optional)
 - After build (always): Triggers a rescan after the Solution or Project is built, regardless of the build being followed by a debug session
 - After build (unless debugging): Triggers a rescan after the Solution or Project is built, unless the build is followed by a debug session
-- On reference added: Triggers a rescan when a reference is added (currently supported for C#, VB)
+- On reference added: Triggers a rescan when a reference is added (currently supported for C#, VB .net Framework projects)
   
 </details>
 

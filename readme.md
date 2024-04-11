@@ -12,7 +12,7 @@
 Either ["Debricked Token"](https://docs.debricked.com/product/administration/generate-access-token) or "Debricked Username" AND "Debricked Password" are required to establish a connection to the Debricked API (Debricked Enterprise is required)
 
 <details>
-  <summary>Other options (recommended)</summary>
+  <summary>**Other options** (recommended)</summary>
 
 ### Connection options (optional)
 Configure an optional proxy and enable "Ignore certificate errors" if required

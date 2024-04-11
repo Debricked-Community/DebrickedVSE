@@ -22,12 +22,13 @@ Configure an optional proxy and enable "Ignore certificate errors" if required
 - Enable Fingerprinting: If enabled the debricked scan will include a [binary fingerprint analysis](https://docs.debricked.com/tools-and-integrations/cli/debricked-cli/file-fingerprinting)
 - Exclusions: Items to exclude during resolve and scan actions (one per line)
 - Scan entire Solution: If enabled the entire solution (all projects) is scanned. If disabled only the active project is scanned.
-- Repository type: See description below
-- Persistent repository mapping strategy: See description below
-- Temporary repository mapping strategy: See description below
+- **Repository type**: See description below
+- **Persistent repository mapping strategy**: See description below
+- **Temporary repository mapping strategy**: See description below
 
 
 Repository mapping:
+
 There are two types of repository mapping the extension can use, the chosen repository type and associated mapping strategy have a major impact on data retention and hygiene in your Debricked tenant.
 The two types of repositories are "persistent" and "temporary" repositories. 
 

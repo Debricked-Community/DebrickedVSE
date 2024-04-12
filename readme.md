@@ -3,7 +3,7 @@
 
 # Setup (Visual Studio 2022 required)
 
-- Download the latest release in the releases section
+- Download the latest release in the [releases](https://github.com/Debricked-Community/DebrickedVSE/releases) section
 - run the .vsix file to install the extension
 - open Visual Studio
 - Open the Tools -> Options menu and select "Debricked" in the list on the left hand side

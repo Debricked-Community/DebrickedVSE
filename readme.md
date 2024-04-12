@@ -67,5 +67,7 @@ Once a solution has been loaded a scan can be manually triggered by clicking the
 
 The toolwindow is split into 2 Tabs (Vulnerabilities and Dependencies) both of which contain a sortable and filterable DataGrid showing vulnerability and dependency data. Clicking on a row shows more details about the entry.
 
+![Vulnerabilities](/screenshots/vulnerabilities.png?raw=true "Vulnerabilities")
+![Dependencies](/screenshots/dependencies.png?raw=true "Dependencies")
 
 [Contributor info](https://github.com/Debricked-Community/DebrickedVSE/blob/master/CONTRIBUTING.md)

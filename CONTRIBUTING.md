@@ -80,8 +80,7 @@ Install the Visual Studio extension development workload through the Visual Stud
 Load Solution in Visual Studio 2022, right click solution in solution explorer -> build :)
 
 # WIPs:
-- temp repo creation and rule copying -> complete implementation and test
-- finish the MasterEventHandler handlers for refAdded/removed 
+- evaluate ReferenceAdded support for post .net framework projects
 - support ReferenceAdded event for other languages (python/js etc)-> this should be possible by subscribing to the reference hierarchy nodes in the solution explorer, an example for python is already started in CLHelper
 - error handling
 
